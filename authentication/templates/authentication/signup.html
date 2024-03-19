@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Closer {% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+</head>
+
+<body>
+    {% for message in messages %}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span class="message">{{ message }}</span>
+    </div>
+    {% endfor %}
+    <div class="page-container">
+        <div class="button-container">
+            <span>Have an account?</span>
+            <button onclick="window.location.href='{% url 'index' %}'">Login</button>
+        </div>
+        <div class="form-container">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mandatory-fields">
+                    <p>Required fields</p>
+                    {{ signup_form.first_name }}
+                    {{ signup_form.last_name }}
+                    {{ signup_form.email }}
+                    {{ signup_form.password }}
+                    <div class="date-label field-container">
+                        <span>Birthday</span>
+                        {{ signup_form.date_of_birth }}
+                    </div>
+                </div>
+                <div class="optional-fields">
+                    <p>Optional fields</p>
+                    {{ signup_form.second_name }}
+                    {{ signup_form.phone_number }}
+                    {{ signup_form.current_city }}
+                    {{ signup_form.current_state }}
+                    {{ signup_form.current_country }}
+                    {{ signup_form.home_city }}
+                    {{ signup_form.home_state }}
+                    {{ signup_form.home_country }}
+                    {{ signup_form.about_me }}
+                    {{ signup_form.education }}
+                    <div class="profile-picture field-container">
+                        <span>Profile picture</span>
+                        {{ signup_form.profile_picture_url }}
+                    </div>
+                    <div class="background-picture field-container">
+                        <span>Background picture</span>
+                        {{ signup_form.background_picture_url }}
+                    </div>
+                    <div class="radios">
+                        <div class="religion field-container">
+                            <span>Religion</span>
+                            {{ signup_form.religion }}
+                        </div>
+
+                        <div class="relationship field-container">
+                            <span>Relationship</span>
+                            {{ signup_form.relationship }}
+
+                        </div>
+
+                        <div class="gender field-container">
+                            <span> Gender</span>
+                            {{ signup_form.gender }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="submit">Sign up</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+{% comment %} TODO: For future, maybe split registration process into two parts, one with mandatory info and second with
+optional information {% endcomment %}

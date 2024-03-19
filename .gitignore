@@ -1,1 +1,15 @@
+# Virtual environment
 venv/
+
+# Python files
+__pycache__/
+
+
+# VS Code files
+.vscode/
+
+# Temporary files
+temp.txt
+
+# Media files
+media/

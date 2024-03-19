@@ -1,0 +1,185 @@
+:root {
+    --bg-dark: #121212;
+    --main-text-dark: #CCCCCC;
+    --add-text-dark: #999999;
+    --accent: #4CAF50;
+    --accent-bg: #1B5E20;
+}
+
+* {
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    background: repeating-linear-gradient(60deg, #009245, #7AC143, #009245);
+    background-size: 400%;
+    animation: gradient 30s ease infinite;
+    text-shadow: 2px 2px 5px #999999;
+    font-size: 100%;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.alert {
+    position: absolute;
+    top: 20px;
+    right: 50%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    background: #009245;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: var(--accent-bg);
+}
+
+.page-container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    font-size: 2rem;
+}
+
+.form-container form {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+.mandatory-fields,
+.optional-fields {
+    width: 100%;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    background: #009245;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+    padding: 10px;
+}
+
+.field-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.field-container span {
+    white-space: nowrap;
+    flex-grow: 1;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 4px;
+    font-size: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+}
+
+input[type="date"] {
+    flex-grow: 1;
+    padding: 4px;
+    font-size: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+}
+
+select {
+    flex-grow: 1;
+    font-size: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+}
+
+input[type="file"] {
+    flex-grow: 1;
+    font-size: 2rem;
+}
+
+input[type="submit"] {
+    background-color: var(--accent);
+    font-size: 3vh;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+}
+
+.radios {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+    {
+    % comment %
+}
+
+TODO: Add so that the "Go back" button is in the top right corner of the page {
+    % endcomment %
+}
+
+button {
+    background-color: var(--accent);
+    font-size: 2rem;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    width: 19vw;
+}
+
+button:hover {
+    background-color: var(--accent-bg);
+    border-radius: 15px;
+}

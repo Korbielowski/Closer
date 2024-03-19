@@ -1,0 +1,286 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block style %}
+
+.alert {
+    position: absolute;
+    top: 20px;
+    right: 50%;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    background: #009245;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: var(--accent-bg);
+}
+
+.user-info-container{
+width: 100%;
+grid-area: info;
+}
+
+.user-friends {
+grid-area: friends;
+}
+
+.user-posts {
+grid-area: posts;
+}
+
+.user-profile-container {
+width: 100%;
+display: grid;
+grid-template:
+"info info info info"
+". friends posts ."
+/ [col-start] 1fr [col-2] 2fr [col-3] 2fr [col-4] 1fr [col-end];
+}
+
+.profile-picture-container {
+width: 100%;
+padding: 1vh 1vw;
+{% if user_info.background_picture_url != "blank"%}
+background-image: url({{ user_info.background_picture_url.url }});
+background-size: cover;
+background-repeat: no-repeat;
+{% else %}
+background-color: var(--add-text-dark);
+{% endif %}
+}
+
+.profile-picture {
+border-radius: 50%;
+height: 20vh;
+border: 0.5vh solid var(--outline-light);
+outline: 0.5vh solid var(--outline-dark);
+}
+
+.user-info {
+padding: 10px
+}
+
+.user-info span:not(.name, .about-me) {
+color: var(--add-text-dark);
+display: inline-block;
+white-space: no-wrap;
+vertical-align: middle;
+}
+
+.user-name span {
+font-size: 3rem;
+}
+
+.user-about-me span {
+font-size: 2rem;
+}
+
+#info-list {
+list-style-type: none;
+}
+
+#info-list li {
+margin: 10px 0;
+}
+
+.current-user-location span {
+color: var(--add-text-dark);
+display: inline-block;
+white-space: no-wrap;
+vertical-align: middle;
+}
+
+.user-home-location span {
+color: var(--add-text-dark);
+display: inline-block;
+white-space: no-wrap;
+vertical-align: middle;
+}
+
+.expand-button {
+padding: 4px;
+width: 2v%;
+background-color: var(--accent);
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+font-size: 1rem;
+}
+
+.expand-button:hover {
+background-color: var(--accent-bg);
+border-radius: 15px;
+}
+
+{% endblock style %}
+
+{% block content %}
+
+    {% for message in messages %}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <span class="message">{{ message }}</span>
+    </div>
+    {% endfor %}
+
+<div class="user-profile-container">
+    <div class="user-info-container">
+        <div class="profile-picture-container">
+            <!-- TODO: Remove blank from database -->
+            {% if user_info.profile_picture_url != "blank"%}
+            <img class="profile-picture" src="{{ user_info.profile_picture_url.url }}"
+                alt="{{ user_info.first_name }}'s profile picture">
+            {% else %}
+            <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
+                alt="{{ user_info.first_name }}'s profile picture">
+            {% endif %}
+        </div>
+        <div class="user-info">
+            <div class="user-name">
+                <span class="name">{{ user_name }}</span>
+            </div>
+            {% if user_info.about_me != "" %}
+            <div class="user-about-me">
+                <span class="about-me">About me: </span>
+                <span class="about-me">{{ user_info.about_me }}</span>
+            </div>
+            {% endif %}
+            <ol id="info-list" hidden="hidden">
+                <li>
+                    <div class="user-gender">
+                        <span class="material-symbols-outlined">
+                            wc
+                        </span>
+                        <span>Gender: </span>
+                        {% if user_info.gender != "" %}
+                        <span>{{ user_info.gender }}</span>
+                        {% else %}
+                        <span>Unspecified</span>
+                        {% endif %}
+                    </div>
+                </li>
+                <li>
+                    <div class="user-birthday">
+                        <span class="material-symbols-outlined">
+                            child_friendly
+                        </span>
+                        <span>Birthday: </span>
+                        {% if user_info.date_of_birth != "" %}
+                        <span>{{ user_info.date_of_birth }}</span>
+                        {% else %}
+                        <span>Unspecified</span>
+                        {% endif %}
+                    </div>
+                </li>
+                <li>
+                    <div class="user-creation-date">
+                        <span class="material-symbols-outlined">
+                            person
+                        </span>
+                        <span>User since: </span>
+                        <span>{{ user_info.creation_date }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="current-user-location">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+                        <span>Lives in: </span>
+                        <span>{{ user_current_location }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="user-home-location">
+                        <span class="material-symbols-outlined">
+                            location_on
+                        </span>
+                        <span>From: </span>
+                        <span>{{ user_home_location }}</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="user-relationship">
+                        <span class="material-symbols-outlined">
+                            diversity_4
+                        </span>
+                        <span>Status: </span>
+                        {% if user_info.relationship != "" %}
+                        <span>{{ user_info.relationship }}</span>
+                        {% else %}
+                        <span>Unspecified</span>
+                        {% endif %}
+                    </div>
+                </li>
+                <li>
+                    <div class="user-religion">
+                        <span class="material-symbols-outlined">
+                            church
+                        </span>
+                        <span>Religion: </span>
+                        {% if user_info.religion != "" %}
+                        <span>{{ user_info.religion }}</span>
+                        {% else %}
+                        <span>Unspecified</span>
+                        {% endif %}
+                    </div>
+                </li>
+            </ol>
+            <button class="expand-button" onclick="toggle(this)">
+                <!-- TODO: Add expand arrow (use toggle)
+                    <span class="material-symbols-outlined">
+                    expand_more
+                </span> -->
+                Show more
+            </button>
+        </div>
+    </div>
+    <div class="user-friends">
+        <span>Friends</span>
+        <ol>
+            {% comment %} {% for %}
+            <li class="friend"></li>
+            {% endfor %} {% endcomment %}
+        </ol>
+    </div>
+    <div class="user-posts">
+        <span>Posts</span>
+        <ol>
+            {% comment %} {% for %}
+            <li class="post"></li>
+            {% endfor %} {% endcomment %}
+        </ol>
+    </div>
+</div>
+
+
+<script>
+    let toggle = button => {
+        let element = document.getElementById("info-list");
+        let hidden = element.getAttribute("hidden");
+
+        if (hidden) {
+            element.removeAttribute("hidden");
+            button.innerText = "Show less";
+        } else {
+            element.setAttribute("hidden", "hidden");
+            button.innerText = "Show more";
+        }
+    }
+</script>
+
+{% endblock content %}

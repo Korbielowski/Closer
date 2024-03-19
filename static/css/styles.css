@@ -1,0 +1,83 @@
+:root {
+    --bg-dark: #121212;
+    --main-text-dark: #CCCCCC;
+    --add-text-dark: #999999;
+    --accent: #4CAF50;
+    --accent-bg: #1B5E20;
+}
+
+* {
+    font-family: "Times New Roman", Times, serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: repeating-linear-gradient(60deg, #009245, #7AC143, #009245);
+    background-size: 400%;
+    animation: gradient 30s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.form-container {
+    text-shadow: 2px 2px 5px #999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+input {
+    margin: auto 0;
+}
+
+button {
+    background-color: var(--accent);
+    border: none;
+    color: --main-text-dark;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+}
+
+button:hover {
+    background-color: var(--accent-bg);
+    border-radius: 15px;
+}
+
+.submit {
+    background-color: var(--accent);
+    border: none;
+    color: --main-text-dark;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+}
+
+.submit:hover {
+    background-color: var(--accent-bg);
+    border-radius: 15px;
+}
