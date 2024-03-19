@@ -1,0 +1,136 @@
+:root {
+    --bg-dark: #121212;
+    --main-text-dark: #CCCCCC;
+    --add-text-dark: #999999;
+    --accent: #4CAF50;
+    --accent-bg: #1B5E20;
+}
+
+* {
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: repeating-linear-gradient(60deg, #009245, #7AC143, #009245);
+    background-size: 400%;
+    animation: gradient 30s ease infinite;
+    text-shadow: 2px 2px 5px #999999;
+    font-size: 100%;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.alert {
+    position: absolute;
+    top: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    background: #009245;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: var(--accent-bg);
+}
+
+.page-container {
+    height: 600px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1vh;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    background: #009245;
+}
+
+.image-container {
+    background: black;
+    opacity: 0.5;
+    border-radius: 15px;
+}
+
+.image-container img {
+    width: 400px;
+    height: auto;
+}
+
+.form-container {
+    width: 400px;
+}
+
+.form-container form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 4px;
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    width: 100%;
+    font-size: 2em;
+}
+
+.line {
+    width: 400px;
+    border-bottom: 0.5vh dashed black;
+}
+
+button {
+    padding: 4px;
+    width: 400px;
+    background-color: var(--accent);
+    border-radius: 15px;
+    border: 2px solid var(--bg-dark);
+    box-shadow: 2px 2px 5px #999999;
+    font-size: 2em;
+}
+
+button:hover {
+    background-color: var(--accent-bg);
+    border-radius: 15px;
+}
