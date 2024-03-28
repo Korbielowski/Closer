@@ -1,3 +1,7 @@
+from email.policy import default
+from random import choices
+from turtle import mode
+from unittest.util import _MAX_LENGTH
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -65,3 +69,18 @@ class CloserUser(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "username"]
+
+
+class Friendship(models.Model):
+    FRIENDSHIP_STATUS = (
+        ("pending", "pending"),
+        ("accepted", "accepted"),
+        ("declined", "declined"),
+    )
+    inviting_user = models.ForeignKey(
+        CloserUser, default=None, on_delete=models.CASCADE, related_name="inviter"
+    )
+    accepting_user = models.ForeignKey(
+        CloserUser, default=None, on_delete=models.CASCADE, related_name="receiver"
+    )
+    status = models.CharField(max_length=8, choices=FRIENDSHIP_STATUS)
