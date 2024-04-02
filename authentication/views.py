@@ -26,7 +26,17 @@ def login(request) -> HttpResponse:
             if user is not None:
                 auth.login(request, user)
                 messages.success(request, "Logged in successfully :)")
-                return redirect("profile")
+                print(
+                    models.CloserUser.objects.filter(email=form.cleaned_data["email"])[
+                        0
+                    ].username
+                )
+                return redirect(
+                    "profile",
+                    username=models.CloserUser.objects.filter(
+                        email=form.cleaned_data["email"]
+                    )[0].username,
+                )
             else:
                 messages.success(
                     request, "Email or password is wrong. Please try again"
@@ -47,7 +57,11 @@ def signup(request) -> HttpResponse:
                 messages.success(request, "Your password is too weak")
                 return redirect("signup")
             else:
+                username: str = (
+                    request.POST["first_name"] + "-" + request.POST["last_name"]
+                )
                 user.password = make_password(request.POST["password"])
+                user.username = username
                 user.save()
                 user = auth.authenticate(
                     username=form.cleaned_data["email"],
@@ -55,7 +69,7 @@ def signup(request) -> HttpResponse:
                 )
                 auth.login(request, user)
                 messages.success(request, "Signed up successfully :)")
-                return redirect("profile")
+                return redirect("profile", username=username)
         messages.success(
             request, "It looks like You have an active account. Please try login in."
         )

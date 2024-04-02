@@ -1,4 +1,4 @@
-import re
+import re  # Strange import
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib import messages
@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from authentication.models import CloserUser
 
 
-def profile(request) -> HttpResponse:
+def profile(request, username) -> HttpResponse:
     user_info = CloserUser.objects.filter(email=request.user.email)
     user_name = process_string(
         user_info[0].first_name,
