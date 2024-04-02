@@ -1,6 +1,8 @@
+from django.forms import ValidationError
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.password_validation import validate_password
 from django.http import HttpResponse
 
 from . import forms, models
@@ -24,7 +26,17 @@ def login(request) -> HttpResponse:
             if user is not None:
                 auth.login(request, user)
                 messages.success(request, "Logged in successfully :)")
-                return redirect("profile")
+                print(
+                    models.CloserUser.objects.filter(email=form.cleaned_data["email"])[
+                        0
+                    ].username
+                )
+                return redirect(
+                    "profile",
+                    username=models.CloserUser.objects.filter(
+                        email=form.cleaned_data["email"]
+                    )[0].username,
+                )
             else:
                 messages.success(
                     request, "Email or password is wrong. Please try again"
@@ -38,15 +50,26 @@ def signup(request) -> HttpResponse:
         form = forms.SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.password = make_password(request.POST["password"])
-            user.save()
-            user = auth.authenticate(
-                username=form.cleaned_data["email"],
-                password=form.cleaned_data["password"],
-            )
-            auth.login(request, user)
-            messages.success(request, "Signed up successfully :)")
-            return redirect("profile")
+            try:
+                validate_password(password=request.POST["password"], user=user)
+            except ValidationError:
+                # TODO: Better password validation message and dont remove user info from signup form
+                messages.success(request, "Your password is too weak")
+                return redirect("signup")
+            else:
+                username: str = (
+                    request.POST["first_name"] + "-" + request.POST["last_name"]
+                )
+                user.password = make_password(request.POST["password"])
+                user.username = username
+                user.save()
+                user = auth.authenticate(
+                    username=form.cleaned_data["email"],
+                    password=form.cleaned_data["password"],
+                )
+                auth.login(request, user)
+                messages.success(request, "Signed up successfully :)")
+                return redirect("profile", username=username)
         messages.success(
             request, "It looks like You have an active account. Please try login in."
         )
