@@ -141,7 +141,7 @@ border-radius: 15px;
     <div class="user-info-container">
         <div class="profile-picture-container">
             <!-- TODO: Remove blank from database -->
-            {% if user_info.profile_picture_url != "blank"%}
+            {% if user_info.profile_picture_url != "blank" %}
             <img class="profile-picture" src="{{ user_info.profile_picture_url.url }}"
                 alt="{{ user_info.first_name }}'s profile picture">
             {% else %}

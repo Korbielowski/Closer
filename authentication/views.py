@@ -26,11 +26,6 @@ def login(request) -> HttpResponse:
             if user is not None:
                 auth.login(request, user)
                 messages.success(request, "Logged in successfully :)")
-                print(
-                    models.CloserUser.objects.filter(email=form.cleaned_data["email"])[
-                        0
-                    ].username
-                )
                 return redirect(
                     "profile",
                     username=models.CloserUser.objects.filter(

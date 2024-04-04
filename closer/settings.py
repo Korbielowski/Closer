@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "authentication",
     "user_profile",
+    "search",
 ]
 
 MIDDLEWARE = [
