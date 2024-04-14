@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Closer {% endblock title %}</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search.css'%}" />
+</head>
+
+<body>
+    <nav class="search-bar">
+        <div class="link-list-container">
+            <ol class="link-list">
+                <li class="list-elment">
+                    <a href="" title="Settings">
+                        <span class="material-symbols-outlined">
+                            settings
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'search_page' %}" title="Search">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'logout' %}" title="Log out">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                </li>
+            </ol>
+        </div>
+        <div class="search-input">
+            <form action="{% url 'search_page' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-element">
+                    {{ search_form.query }}
+                </div>
+            </form>
+        </div>
+    </nav>
+    <div class="page-container">
+        <div class="filters-container"></div>
+        <div class="users-container">
+            {% for user in query_user %}
+            <div class="user-card">
+                <div class="user-name">
+                    <span>
+                        {{ user.first_name }} {{ user.last_name}}
+                    </span>
+                </div>
+                <div class="user-image">
+                    {% if user.profile_picture_url != "blank" %}
+                    <img class="profile-picture" src="{{ user.profile_picture_url.url }}"
+                        alt="{{ user.first_name }}'s profile picture">
+                    {% else %}
+                    <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
+                        alt="{{ user.first_name }}'s profile picture">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
