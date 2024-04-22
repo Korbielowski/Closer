@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 
 from authentication.models import CloserUser
+from utils.process_string import process_string
 
 
 def profile(request, username) -> HttpResponse:
@@ -38,12 +39,3 @@ def profile(request, username) -> HttpResponse:
 
 def edit_profile_field(request, field) -> HttpResponse:
     return HttpResponse("Editing profile")
-
-
-def process_string(base_string: str, strings: list[str], sep="") -> str:
-    for string in strings:
-        if string != "":
-            base_string += sep + string
-    if base_string == "":
-        return "Unspecified"
-    return base_string
