@@ -28,9 +28,9 @@ def login(request) -> HttpResponse:
                 messages.success(request, "Logged in successfully :)")
                 return redirect(
                     "profile",
-                    username=models.CloserUser.objects.filter(
+                    userID=models.CloserUser.objects.filter(
                         email=form.cleaned_data["email"]
-                    )[0].username,
+                    )[0].user_id,
                 )
             else:
                 messages.success(
@@ -64,7 +64,7 @@ def signup(request) -> HttpResponse:
                 )
                 auth.login(request, user)
                 messages.success(request, "Signed up successfully :)")
-                return redirect("profile", username=username)
+                return redirect("profile", userID=request.user.user_id)
         messages.success(
             request, "It looks like You have an active account. Please try login in."
         )

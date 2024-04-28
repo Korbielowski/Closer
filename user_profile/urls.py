@@ -5,6 +5,6 @@ from . import views
 from authentication.views import logout
 
 urlpatterns = [
-    path("<str:username>", views.profile, name="profile"),
+    path("<int:userID>", views.profile, name="profile"),
     path("edit_profile_field/", views.edit_profile_field, name="edit_profile_filed"),
 ]

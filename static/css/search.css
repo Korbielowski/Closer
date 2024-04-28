@@ -90,6 +90,16 @@ input[type="text"] {
 }
 
 .user-card {
+    background-color: yellow;
+}
 
-    background-color: var(--accent);
+.user-name {
+    font-size: large;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    height: 20vh;
+    border: 0.5vh solid var(--outline-light);
+    outline: 0.5vh solid var(--outline-dark);
 }
