@@ -144,6 +144,20 @@
                         </span>
                     </a>
                 </li>
+                <li class="list-elment">
+                    <a href="{% url 'posts' %}" title="Create post">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'profile' user.user_id %}" title="My profile">
+                        <span class="material-symbols-outlined">
+                            account_circle
+                        </span>
+                    </a>
+                </li>
             </ol>
         </div>
         <div class="search-input">

@@ -1,4 +1,3 @@
-import re  # Strange import
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib import messages
@@ -6,6 +5,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 from authentication.models import CloserUser, Friendship
+from posts.models import Post
 from utils.process_string import process_string
 
 
@@ -50,6 +50,9 @@ def profile(request, userID) -> HttpResponse:
         )
         for friend in friends_query
     )
+
+    posts = Post.objects.filter(user=userID)
+
     return render(
         request,
         "user_profile/user_profile.html",
@@ -60,9 +63,11 @@ def profile(request, userID) -> HttpResponse:
             "user_home_location": user_home_location,
             "friends": friends,
             "friends_to_accept": friends_to_accept,
+            "posts": posts,
         },
     )
 
 
-def edit_profile_field(request, field) -> HttpResponse:
-    return HttpResponse("Editing profile")
+# TODO: In the future add an option to edit the profile information
+# def edit_profile_field(request, field) -> HttpResponse:
+#     return HttpResponse("Editing profile")

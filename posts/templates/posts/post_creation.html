@@ -2,11 +2,27 @@
 
 {% block style %}
 .form-container {
+padding: 30px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 2vh;
+font-size: 2rem;
+}
+
+.field {
 width: 100%;
-display: grid;
-grid-template:
-". friends posts ."
-/ [col-start] 1fr [col-2] 2fr [col-3] 2fr [col-4] 1fr [col-end];
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+background: #009245;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 1vh;
+padding: 10px;
 }
 
 input[type="text"] {
@@ -17,6 +33,7 @@ border-radius: 15px;
 border: 2px solid var(--bg-dark);
 box-shadow: 2px 2px 5px #999999;
 }
+
 input[type="file"] {
 flex-grow: 1;
 font-size: 2rem;
@@ -37,17 +54,18 @@ border-radius: 15px;
 }
 {% endblock style %}
 
+
 {% block content %}
 <div class="form-container">
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div>
+        <div class="field">
             {{ post_form.title }}
         </div>
-        <div>
+        <div class="field">
             {{ post_form.description }}
         </div>
-        <div>
+        <div class="field">
             {{ post_form.image }}
         </div>
         <button type="submit" class="submit">Publish</button>

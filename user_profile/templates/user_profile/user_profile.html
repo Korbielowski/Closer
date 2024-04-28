@@ -4,29 +4,29 @@
 {% block style %}
 
 .alert {
-    position: absolute;
-    top: 20px;
-    right: 50%;
-    padding: 10px;
-    border-radius: 15px;
-    border: 2px solid var(--bg-dark);
-    box-shadow: 2px 2px 5px #999999;
-    background: #009245;
+position: absolute;
+top: 20px;
+right: 50%;
+padding: 10px;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+background: #009245;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: black;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+margin-left: 15px;
+color: black;
+font-weight: bold;
+float: right;
+font-size: 22px;
+line-height: 20px;
+cursor: pointer;
+transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: var(--accent-bg);
+color: var(--accent-bg);
 }
 
 .user-info-container{
@@ -126,16 +126,38 @@ background-color: var(--accent-bg);
 border-radius: 15px;
 }
 
+.post {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 0.5vh;
+}
+
+.post-title {
+font-size: 2rem;
+}
+
+.post-description {
+font-size: 1rem;
+}
+
+.post-image {
+height: 20vh;
+border: 0.5vh solid var(--outline-light);
+outline: 0.5vh solid var(--outline-dark);
+}
+
 {% endblock style %}
 
 {% block content %}
 
-    {% for message in messages %}
-    <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <span class="message">{{ message }}</span>
-    </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <span class="message">{{ message }}</span>
+</div>
+{% endfor %}
 
 <div class="user-profile-container">
     <div class="user-info-container">
@@ -282,46 +304,22 @@ border-radius: 15px;
     </div>
     <div class="user-posts">
         <span>Posts</span>
-        <ol>
-            {% comment %} {% for %}
-            <li class="post"></li>
-            {% endfor %} {% endcomment %}
-            {% if friends_to_accept %}
-            {% for friend_to_accept in friends_to_accept %}
-            {% if friend_to_accept.status == "pending" %}
-            <div class="user-card">
-                <div class="user-name">
-                    <span>
-                        {{ friend_to_accept.inviting_user.first_name }} {{ friend_to_accept.inviting_user.last_name}}
-                    </span>
-                </div>
-                <div class="user-image">
-                    {% if friend_to_accept.inviting_user.profile_picture_url != "blank" %}
-                    <img class="profile-picture" src="{{ friend_to_accept.inviting_user.profile_picture_url.url }}"
-                        alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
-                    {% else %}
-                    <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
-                        alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
-                    {% endif %}
-                </div>
-                <div class="friendship-btn">
-                    <a href="{% url 'accept_friend' user.user_id 1%}">
-                        Add friend
-                    </a>
-                    <a href="{% url 'accept_friend' user.user_id 0%}">
-                        Decline friend
-                    </a>
-                </div>
-                <div class="user-profile-btn">
-                    <a href="{% url 'profile' friend_to_accept.inviting_user.user_id %}">
-                        See profile
-                    </a>
-                </div>
+        {% for post in posts %}
+        <div class="post">
+            <span class="post-title">
+                {{ post.title }}
+            </span>
+            <br>
+            <span class="post-description">
+                {{ post.description }}
+            </span>
+            {% if post.image %}
+            <div>
+                <img class="post-image" src="{{ post.image.url }}" alt="">
             </div>
             {% endif %}
-            {% endfor %}
-            {% endif %}
-        </ol>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

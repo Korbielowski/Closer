@@ -30,6 +30,7 @@
         body {
             height: 100vh;
             width: 100vw;
+            overflow-x: hidden;
             background-color: var(--bg-dark);
             color: var(--main-text-dark);
         }
@@ -109,6 +110,20 @@
                     <a href="{% url 'logout' %}" title="Log out">
                         <span class="material-symbols-outlined">
                             logout
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'posts' %}" title="Create post">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'profile' user.user_id %}" title="My profile">
+                        <span class="material-symbols-outlined">
+                            account_circle
                         </span>
                     </a>
                 </li>
