@@ -8,8 +8,8 @@
 - [X] User signin system
 - [X] User profile
 ### - II Milestone
-- [ ] Friendship system
-- [ ] Friend search system
+- [X] Friendship system
+- [X] Friend search system
 - [ ] Posts, polls, tests
 ### - III Milestone
 - [ ] Shorts (short videos)

@@ -36,6 +36,8 @@ def search_page(request) -> HttpResponse:
 #     pass
 
 
+# TODO: Move add_friend and accept_function to separate app called friendship, also it would be good idea to move Friendship model there.
+# TODO: Change name of this funciton to invite_friend
 def add_friend(request, userID) -> HttpResponse:
     # if Friendship(
     #     Q(inviting_user=CloserUser(user_id=request.user.user_id))
