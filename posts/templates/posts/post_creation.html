@@ -1,0 +1,56 @@
+{% extends "./base.html" %}
+
+{% block style %}
+.form-container {
+width: 100%;
+display: grid;
+grid-template:
+". friends posts ."
+/ [col-start] 1fr [col-2] 2fr [col-3] 2fr [col-4] 1fr [col-end];
+}
+
+input[type="text"] {
+width: 100%;
+padding: 4px;
+font-size: 2rem;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+}
+input[type="file"] {
+flex-grow: 1;
+font-size: 2rem;
+}
+
+button {
+background-color: var(--accent);
+font-size: 2rem;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+width: 19vw;
+}
+
+button:hover {
+background-color: var(--accent-bg);
+border-radius: 15px;
+}
+{% endblock style %}
+
+{% block content %}
+<div class="form-container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {{ post_form.title }}
+        </div>
+        <div>
+            {{ post_form.description }}
+        </div>
+        <div>
+            {{ post_form.image }}
+        </div>
+        <button type="submit" class="submit">Publish</button>
+    </form>
+</div>
+{% endblock content %}

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "authentication",
     "user_profile",
     "search",
+    "posts",
 ]
 
 MIDDLEWARE = [

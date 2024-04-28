@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Closer {% endblock title %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --main-text-dark: #CCCCCC;
+            --outline-light: #CCCCCC;
+            --outline-dark: #121212;
+            --add-text-dark: #999999;
+            --accent: #4CAF50;
+            --accent-bg: #1B5E20;
+        }
+        
+        * {
+            font-family: Roboto, Arial, sans-serif;
+            font-weight: 700;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* text-shadow: 1px 1px 2px grey; */
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-color: var(--bg-dark);
+            color: var(--main-text-dark);
+        }
+
+        .navbar {
+            position: sticky;
+            background-color: var(--bg-dark);
+            height: 7vh;
+            width: 100%;
+        }
+
+        .logo-image-container {
+            float: left;
+            height: 7vh;
+            width: 5vw;
+        }
+
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .link-list-container {
+            float: right;
+        }
+
+        .link-list {
+            list-style-type: none;
+            overflow: hidden;
+        }
+
+        .list-elment {
+            display: inline-block;
+            margin: 2vh 1vw;
+        }
+
+        .list-elment a {
+            text-decoration: none;
+            color: var(--main-text-dark);
+        }
+
+        .list-elment a:hover {
+            color: var(--accent);
+            transition: ease-in-out 0.3s;
+        }
+        {% block style %}{% endblock style %}
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo-image-container">
+            {% comment %} TODO: Change to feed, index for now. Also add settings {% endcomment %}
+            <a href="{% url 'index' %}" title="Home">
+                <img class="logo-image" src="{% static '/images/main_logo_no_bg.png' %}" alt="Closer logo">
+            </a>
+        </div>
+        <div class="link-list-container">
+            <ol class="link-list">
+                <li class="list-elment">
+                    <a href="" title="Settings">
+                        <span class="material-symbols-outlined">
+                        settings
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    {% comment %} TODO: Try to add search option without redirecting to search.page, maybe something like this "name=first_name-second_name"  {% endcomment %}
+                    <a href="{% url 'search_page' %}" title="Search">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'logout' %}" title="Log out">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </nav>
+    {% block content %}{% endblock content %}
+</body>
