@@ -189,13 +189,17 @@
                     {% endif %}
                 </div>
                 <div class="friendship-btn">
-                    <a href="{% url 'add_friend' user.user_id %}">
-                        Add friend
+                    <a href="{% url 'send_invitation' user.user_id %}">
+                        <span class="material-symbols-outlined">
+                            person_add
+                        </span>
                     </a>
                 </div>
                 <div class="user-profile-btn">
                     <a href="{% url 'profile' user.user_id %}">
-                        See profile
+                        <span class="material-symbols-outlined">
+                            account_circle
+                        </span>
                     </a>
                 </div>
             </div>

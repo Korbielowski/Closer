@@ -10,19 +10,6 @@ from utils.process_string import process_string
 
 
 def profile(request, userID) -> HttpResponse:
-    friends_to_accept = None
-    if userID == request.user.user_id:
-        friends_to_accept = Friendship.objects.filter(
-            Q(accepting_user=request.user) | Q(status="pending")
-        )
-        if friends_to_accept:
-            print(
-                "Friend to accept",
-                friends_to_accept[0].inviting_user.username,
-                friends_to_accept[0].inviting_user.user_id,
-                friends_to_accept[0].status,
-            )
-
     user_info = CloserUser.objects.filter(user_id=userID)
     user_name = process_string(
         user_info[0].first_name,
@@ -40,7 +27,7 @@ def profile(request, userID) -> HttpResponse:
         sep=", ",
     )
     friends_query = Friendship.objects.filter(
-        Q(inviting_user=userID) | Q(accepting_user=userID) | Q(status="accepted")
+        Q(Q(inviting_user=userID) | Q(accepting_user=userID)) & Q(status="accepted")
     )
     friends = (
         (
@@ -62,7 +49,6 @@ def profile(request, userID) -> HttpResponse:
             "user_current_location": user_current_location,
             "user_home_location": user_home_location,
             "friends": friends,
-            "friends_to_accept": friends_to_accept,
             "posts": posts,
         },
     )

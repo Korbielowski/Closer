@@ -1,0 +1,41 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if friends_to_accept %}
+{% for friend_to_accept in friends_to_accept %}
+{% if friend_to_accept.status == "pending" %}
+<div class="user-card">
+    <div class="user-name">
+        <span>
+            {{ friend_to_accept.inviting_user.first_name }} {{ friend_to_accept.inviting_user.last_name}}
+        </span>
+    </div>
+    <div class="user-image">
+        {% if friend_to_accept.inviting_user.profile_picture_url != "blank" %}
+        <img class="profile-picture" src="{{ friend_to_accept.inviting_user.profile_picture_url.url }}"
+            alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
+        {% else %}
+        <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
+            alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
+        {% endif %}
+    </div>
+    <div class="friendship-btn">
+        <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 1%}">
+            Add friend
+        </a>
+        <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 0%}">
+            Decline friend
+        </a>
+    </div>
+    <div class="user-profile-btn">
+        <a href="{% url 'profile' friend_to_accept.inviting_user.user_id %}">
+            See profile
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock content %}
