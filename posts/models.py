@@ -53,7 +53,7 @@ class Test(models.Model):
 
 
 class UserTestAnswer(models.Model):
-    poll = user = models.ForeignKey(Poll, default=None, on_delete=models.CASCADE)
+    test = user = models.ForeignKey(Test, default=None, on_delete=models.CASCADE)
     user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
     answer = models.CharField(max_length=500)
     answer_date = models.DateField(auto_now_add=True)

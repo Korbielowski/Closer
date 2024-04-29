@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, Poll
+from .models import Post, Poll, Test
 
 
 class PostForm(forms.ModelForm):
@@ -77,6 +77,71 @@ class PollFrom(forms.ModelForm):
                     "placeholder": "Fourth answer*",
                     "name": "fourth_ans",
                     "class": "poll-fourth_ans",
+                }
+            ),
+        }
+
+
+class TestFrom(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = (
+            "title",
+            "question",
+            "first_ans",
+            "second_ans",
+            "third_ans",
+            "fourth_ans",
+            "correct_ans",
+        )
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "Test title*",
+                    "name": "title",
+                    "class": "test-title",
+                }
+            ),
+            "question": forms.TextInput(
+                attrs={
+                    "placeholder": "Test question*",
+                    "name": "question",
+                    "class": "test-question",
+                }
+            ),
+            "first_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "First answer*",
+                    "name": "first_ans",
+                    "class": "test-first_ans",
+                }
+            ),
+            "second_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Second answer*",
+                    "name": "second_ans",
+                    "class": "test-second_ans",
+                }
+            ),
+            "third_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Third answer*",
+                    "name": "third_ans",
+                    "class": "test-third_ans",
+                }
+            ),
+            "fourth_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Fourth answer*",
+                    "name": "fourth_ans",
+                    "class": "test-fourth_ans",
+                }
+            ),
+            "correct_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Correct answer*",
+                    "name": "correct_ans",
+                    "class": "test-correct_ans",
                 }
             ),
         }

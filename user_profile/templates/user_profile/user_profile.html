@@ -162,7 +162,7 @@ transition: ease-in-out 0.3s;
 }
 
 
-.post-container {
+.post-container, .poll-container, .test-container {
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -170,7 +170,7 @@ align-items: center;
 gap: 1vh;
 }
 
-.post {
+.post, .poll, .test {
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -194,6 +194,27 @@ height: 20vh;
 border: 0.5vh solid var(--outline-light);
 outline: 0.5vh solid var(--outline-dark);
 }
+
+.poll a {
+    text-decoration: none;
+    color: var(--main-text-dark);
+}
+
+.poll a:hover {
+    color: var(--accent);
+    transition: ease-in-out 0.3s;
+}
+
+.test a {
+    text-decoration: none;
+    color: var(--main-text-dark);
+}
+
+.test a:hover {
+    color: var(--accent);
+    transition: ease-in-out 0.3s;
+}
+
 
 {% endblock style %}
 
@@ -392,6 +413,31 @@ outline: 0.5vh solid var(--outline-dark);
                 </a>
                 <a href="{% url 'poll_answer' poll.id poll.fourth_ans %}" class="poll-answer">
                     {{ poll.fourth_ans }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="test-container">
+            {% for test in tests %}
+            <div class="test">
+                <span class="test-title">
+                    {{ test.title }}
+                </span>
+                <br>
+                <span class="test-question">
+                    {{ test.question }}
+                </span>
+                <a href="{% url 'test_answer' test.id test.first_ans %}" class="test-answer">
+                    {{ test.first_ans }}
+                </a>
+                <a href="{% url 'test_answer' test.id test.second_ans %}" class="test-answer">
+                    {{ test.second_ans }}
+                </a>
+                <a href="{% url 'test_answer' test.id test.third_ans %}" class="test-answer">
+                    {{ test.third_ans }}
+                </a>
+                <a href="{% url 'test_answer' test.id test.fourth_ans %}" class="test-answer">
+                    {{ test.fourth_ans }}
                 </a>
             </div>
             {% endfor %}

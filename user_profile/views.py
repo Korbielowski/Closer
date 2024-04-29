@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 from authentication.models import CloserUser, Friendship
-from posts.models import Post, Poll
+from posts.models import Post, Poll, Test
 from utils.process_string import process_string
 
 
@@ -40,6 +40,7 @@ def profile(request, userID) -> HttpResponse:
 
     posts = Post.objects.filter(user=userID)
     polls = Poll.objects.filter(author=userID)
+    tests = Test.objects.filter(author=userID)
 
     return render(
         request,
@@ -52,6 +53,7 @@ def profile(request, userID) -> HttpResponse:
             "friends": friends,
             "posts": posts,
             "polls": polls,
+            "tests": tests,
         },
     )
 

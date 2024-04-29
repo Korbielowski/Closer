@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Q
 
-from .forms import PostForm, PollFrom
-from .models import Poll, UserPollAnswer
+from .forms import PostForm, PollFrom, TestFrom
+from .models import Poll, UserPollAnswer, Test, UserTestAnswer
 
 
 def create_post(request) -> HttpResponse:
@@ -66,4 +66,20 @@ def create_test(request) -> HttpResponse:
 
 
 def test_answer(request, test_id, answer) -> HttpResponse:
-    pass
+    test = Test.objects.get(id=test_id)
+    if UserTestAnswer.objects.filter(
+        Q(test=test) & Q(user=request.user.user_id)
+    ).count():
+        print("Cannot fill the test twice")
+        return redirect("profile", request.user.user_id)
+
+    test.votes += 1
+    test.save()
+
+    test_ans = UserTestAnswer()
+    test_ans.test = test
+    test_ans.answer = answer
+    test_ans.user = request.user
+    test_ans.save()
+
+    return redirect("profile", request.user.user_id)

@@ -139,5 +139,28 @@
             </ol>
         </div>
     </nav>
+    <div>
+        <div class="list-elment">
+            <a href="{% url 'posts' %}" title="Create post">
+                <span class="material-symbols-outlined">
+                    post
+                    </span>
+            </a>
+        </div>
+        <div class="list-elment">
+            <a href="{% url 'polls' %}" title="Create poll">
+                <span class="material-symbols-outlined">
+                    how_to_vote
+                    </span>
+            </a>
+        </div>
+        <div class="list-elment">
+            <a href="{% url 'tests' %}" title="Create test">
+                <span class="material-symbols-outlined">
+                    ballot
+                    </span>
+            </a>
+        </div>
+    </div>
     {% block content %}{% endblock content %}
 </body>
