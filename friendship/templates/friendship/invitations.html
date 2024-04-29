@@ -1,41 +1,95 @@
 {% extends "./base.html" %}
 {% load static %}
 
-{% block content %}
+{% block style %}
+.invitation-container {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 2vh;
 
-{% if friends_to_accept %}
-{% for friend_to_accept in friends_to_accept %}
-{% if friend_to_accept.status == "pending" %}
-<div class="user-card">
-    <div class="user-name">
-        <span>
-            {{ friend_to_accept.inviting_user.first_name }} {{ friend_to_accept.inviting_user.last_name}}
-        </span>
+}
+.user-card {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 400px;
+width: 350px;
+background-color: #303030;
+}
+
+.profile-picture {
+height: 300px;
+}
+
+.elem {
+color: var(--add-text-dark);
+display: inline-block;
+white-space: no-wrap;
+vertical-align: middle;
+}
+
+.elem a {
+text-decoration: none;
+color: var(--main-text-dark);
+}
+
+.elem a:hover {
+color: var(--accent);
+transition: ease-in-out 0.3s;
+}
+
+{% endblock style %}
+
+{% block content %}
+<div class="invitation-container">
+    {% if friends_to_accept %}
+    {% for friend_to_accept in friends_to_accept %}
+    {% if friend_to_accept.status == "pending" %}
+    <div class="user-card">
+        <div class="user-name">
+            <span>
+                {{ friend_to_accept.inviting_user.first_name }} {{ friend_to_accept.inviting_user.last_name}}
+            </span>
+        </div>
+        <div class="user-image">
+            {% if friend_to_accept.inviting_user.profile_picture_url != "blank" %}
+            <img class="profile-picture" src="{{ friend_to_accept.inviting_user.profile_picture_url.url }}"
+                alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
+            {% else %}
+            <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
+                alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
+            {% endif %}
+        </div>
+        <div>
+            <div class="friendship-btn elem">
+                <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 1%}"
+                    title="Accept invitation">
+                    <span class="material-symbols-outlined">
+                        person_add
+                    </span>
+                </a>
+                <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 0%}"
+                    title="Decline invitation">
+                    <span class="material-symbols-outlined">
+                        person_remove
+                    </span>
+                </a>
+            </div>
+            <div class="user-profile-btn elem">
+                <a href="{% url 'profile' friend_to_accept.inviting_user.user_id %}" title="View profile">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="user-image">
-        {% if friend_to_accept.inviting_user.profile_picture_url != "blank" %}
-        <img class="profile-picture" src="{{ friend_to_accept.inviting_user.profile_picture_url.url }}"
-            alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
-        {% else %}
-        <img class="profile-picture" src="{% static '/images/base_profile_picture.jpg' %}"
-            alt="{{ friend_to_accept.inviting_user.first_name }}'s profile picture">
-        {% endif %}
-    </div>
-    <div class="friendship-btn">
-        <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 1%}">
-            Add friend
-        </a>
-        <a href="{% url 'accept_invitation' friend_to_accept.inviting_user.user_id 0%}">
-            Decline friend
-        </a>
-    </div>
-    <div class="user-profile-btn">
-        <a href="{% url 'profile' friend_to_accept.inviting_user.user_id %}">
-            See profile
-        </a>
-    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 </div>
-{% endif %}
-{% endfor %}
-{% endif %}
+
 {% endblock content %}

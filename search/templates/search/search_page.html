@@ -105,16 +105,35 @@
         }
 
         .user-card {
-            background-color: var(--accent);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            width: 350px;
+            background-color: #303030;
         }
 
-        .user-name {}
-
         .profile-picture {
-            border-radius: 50%;
-            height: 20vh;
-            border: 0.5vh solid var(--outline-light);
-            outline: 0.5vh solid var(--outline-dark);
+            height: 300px;
+            width: 300px;
+        }
+
+        .elem {
+            color: var(--add-text-dark);
+            display: inline-block;
+            white-space: no-wrap;
+            vertical-align: middle;
+        }
+
+        .elem a {
+            text-decoration: none;
+            color: var(--main-text-dark);
+        }
+
+        .elem a:hover {
+            color: var(--accent);
+            transition: ease-in-out 0.3s;
         }
     </style>
 </head>
@@ -131,6 +150,8 @@
                     </a>
                 </li>
                 <li class="list-elment">
+                    {% comment %} TODO: Try to add search option without redirecting to search.page, maybe something
+                    like this "name=first_name-second_name" {% endcomment %}
                     <a href="{% url 'search_page' %}" title="Search">
                         <span class="material-symbols-outlined">
                             search
@@ -155,6 +176,13 @@
                     <a href="{% url 'profile' user.user_id %}" title="My profile">
                         <span class="material-symbols-outlined">
                             account_circle
+                        </span>
+                    </a>
+                </li>
+                <li class="list-elment">
+                    <a href="{% url 'invitations_page' %}" title="Invitations">
+                        <span class="material-symbols-outlined">
+                            group_add
                         </span>
                     </a>
                 </li>
@@ -188,19 +216,21 @@
                         alt="{{ user.first_name }}'s profile picture">
                     {% endif %}
                 </div>
-                <div class="friendship-btn">
-                    <a href="{% url 'send_invitation' user.user_id %}">
-                        <span class="material-symbols-outlined">
-                            person_add
-                        </span>
-                    </a>
-                </div>
-                <div class="user-profile-btn">
-                    <a href="{% url 'profile' user.user_id %}">
-                        <span class="material-symbols-outlined">
-                            account_circle
-                        </span>
-                    </a>
+                <div>
+                    <div class="friendship-btn elem">
+                        <a href="{% url 'send_invitation' user.user_id %}" title="Invite">
+                            <span class="material-symbols-outlined">
+                                person_add
+                            </span>
+                        </a>
+                    </div>
+                    <div class="user-profile-btn elem">
+                        <a href="{% url 'profile' user.user_id %}" title="Profile">
+                            <span class="material-symbols-outlined">
+                                account_circle
+                            </span>
+                        </a>
+                    </div>
                 </div>
             </div>
             {% endfor %}

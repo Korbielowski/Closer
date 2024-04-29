@@ -126,12 +126,59 @@ background-color: var(--accent-bg);
 border-radius: 15px;
 }
 
+.friends-container {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 1vh;
+}
+
+.friend-card {
+width: 80%;
+height: 400px;
+background-color: #303030;
+}
+
+.friend-name {
+font-size: 3rem;
+}
+
+.elem {
+color: var(--add-text-dark);
+display: inline-block;
+white-space: no-wrap;
+vertical-align: middle;
+}
+
+.elem a {
+text-decoration: none;
+color: var(--main-text-dark);
+}
+
+.elem a:hover {
+color: var(--accent);
+transition: ease-in-out 0.3s;
+}
+
+
+.post-container {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 1vh;
+}
+
 .post {
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+width: 400px;
+height: 400px;
 gap: 0.5vh;
+background-color: #303030;
 }
 
 .post-title {
@@ -274,16 +321,16 @@ outline: 0.5vh solid var(--outline-dark);
     </div>
     <div class="user-friends">
         <span>Friends</span>
-        <ol>
+        <div class="friends-container">
             {% for friend in friends %}
-            <li class="friend">
-                <div class="user-card">
-                    <div class="user-name">
+            <div class="friend">
+                <div class="friend-card">
+                    <div class="friend-name">
                         <span>
                             {{ friend.first_name }} {{ friend.last_name}}
                         </span>
                     </div>
-                    <div class="user-image">
+                    <div class="friend-image">
                         {% if friend.profile_picture_url != "blank" %}
                         <img class="profile-picture" src="{{ friend.profile_picture_url.url }}"
                             alt="{{ friend.first_name }}'s profile picture">
@@ -292,34 +339,38 @@ outline: 0.5vh solid var(--outline-dark);
                             alt="{{ friend.first_name }}'s profile picture">
                         {% endif %}
                     </div>
-                    <div class="user-profile-btn">
-                        <a href="{% url 'profile' friend.user_id %}">
-                            See profile
+                    <div class="friend-profile-btn elem">
+                        <a href="{% url 'profile' friend.user_id %}" title="View profile">
+                            <span class="material-symbols-outlined">
+                                account_circle
+                            </span>
                         </a>
                     </div>
                 </div>
-            </li>
+            </div>
             {% endfor %}
-        </ol>
+        </div>
     </div>
     <div class="user-posts">
         <span>Posts</span>
-        {% for post in posts %}
-        <div class="post">
-            <span class="post-title">
-                {{ post.title }}
-            </span>
-            <br>
-            <span class="post-description">
-                {{ post.description }}
-            </span>
-            {% if post.image %}
-            <div>
-                <img class="post-image" src="{{ post.image.url }}" alt="">
+        <div class="post-container">
+            {% for post in posts %}
+            <div class="post">
+                <span class="post-title">
+                    {{ post.title }}
+                </span>
+                <br>
+                <span class="post-description">
+                    {{ post.description }}
+                </span>
+                {% if post.image %}
+                <div>
+                    <img class="post-image" src="{{ post.image.url }}" alt="">
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 
