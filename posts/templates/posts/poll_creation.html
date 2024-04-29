@@ -1,0 +1,73 @@
+{% extends "./base.html" %}
+
+{% block style %}
+.form-container {
+padding: 30px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 2vh;
+font-size: 2rem;
+}
+
+.field {
+width: 100%;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+background: #009245;
+padding: 10px;
+}
+
+input[type="text"] {
+width: 100%;
+padding: 4px;
+font-size: 2rem;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+}
+
+button {
+background-color: var(--accent);
+font-size: 2rem;
+border-radius: 15px;
+border: 2px solid var(--bg-dark);
+box-shadow: 2px 2px 5px #999999;
+width: 19vw;
+}
+
+button:hover {
+background-color: var(--accent-bg);
+border-radius: 15px;
+}
+{% endblock style %}
+
+
+{% block content %}
+<div class="form-container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+            {{ poll_form.title }}
+        </div>
+        <div class="field">
+            {{ poll_form.question }}
+        </div>
+        <div class="field">
+            {{ poll_form.first_ans }}
+        </div>
+        <div class="field">
+            {{ poll_form.second_ans }}
+        </div>
+        <div class="field">
+            {{ poll_form.third_ans }}
+        </div>
+        <div class="field">
+            {{ poll_form.fourth_ans }}
+        </div>
+        <button type="submit" class="submit">Publish</button>
+    </form>
+</div>
+{% endblock content %}

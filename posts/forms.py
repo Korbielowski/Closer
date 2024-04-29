@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post
+from .models import Post, Poll
 
 
 class PostForm(forms.ModelForm):
@@ -20,6 +20,63 @@ class PostForm(forms.ModelForm):
                     "placeholder": "Post description*",
                     "name": "description",
                     "class": "post-description",
+                }
+            ),
+        }
+
+
+class PollFrom(forms.ModelForm):
+    class Meta:
+        model = Poll
+        fields = (
+            "title",
+            "question",
+            "first_ans",
+            "second_ans",
+            "third_ans",
+            "fourth_ans",
+        )
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "Poll title*",
+                    "name": "title",
+                    "class": "poll-title",
+                }
+            ),
+            "question": forms.TextInput(
+                attrs={
+                    "placeholder": "Poll question*",
+                    "name": "question",
+                    "class": "poll-question",
+                }
+            ),
+            "first_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "First answer*",
+                    "name": "first_ans",
+                    "class": "poll-first_ans",
+                }
+            ),
+            "second_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Second answer*",
+                    "name": "second_ans",
+                    "class": "poll-second_ans",
+                }
+            ),
+            "third_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Third answer*",
+                    "name": "third_ans",
+                    "class": "poll-third_ans",
+                }
+            ),
+            "fourth_ans": forms.TextInput(
+                attrs={
+                    "placeholder": "Fourth answer*",
+                    "name": "fourth_ans",
+                    "class": "poll-fourth_ans",
                 }
             ),
         }

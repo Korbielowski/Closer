@@ -23,7 +23,7 @@ class Poll(models.Model):
     question = models.CharField(max_length=500)
     first_ans = models.CharField(max_length=500)
     second_ans = models.CharField(max_length=500)
-    third_and = models.CharField(max_length=500)
+    third_ans = models.CharField(max_length=500)
     fourth_ans = models.CharField(max_length=500)
     votes = models.IntegerField(default=0)
 
@@ -35,5 +35,25 @@ class UserPollAnswer(models.Model):
     user = models.ForeignKey(
         CloserUser, default=None, on_delete=models.CASCADE, related_name="respondent"
     )
+    answer = models.CharField(max_length=500)
+    answer_date = models.DateField(auto_now_add=True)
+
+
+class Test(models.Model):
+    author = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
+    creation_date = models.DateField(auto_now_add=True)
+    title = models.CharField(max_length=100, default="")
+    question = models.CharField(max_length=500)
+    first_ans = models.CharField(max_length=500)
+    second_ans = models.CharField(max_length=500)
+    third_ans = models.CharField(max_length=500)
+    fourth_ans = models.CharField(max_length=500)
+    correct_ans = models.CharField(max_length=500)
+    votes = models.IntegerField(default=0)
+
+
+class UserTestAnswer(models.Model):
+    poll = user = models.ForeignKey(Poll, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
     answer = models.CharField(max_length=500)
     answer_date = models.DateField(auto_now_add=True)

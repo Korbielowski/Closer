@@ -371,6 +371,31 @@ outline: 0.5vh solid var(--outline-dark);
             </div>
             {% endfor %}
         </div>
+        <div class="poll-container">
+            {% for poll in polls %}
+            <div class="poll">
+                <span class="poll-title">
+                    {{ poll.title }}
+                </span>
+                <br>
+                <span class="poll-question">
+                    {{ poll.question }}
+                </span>
+                <a href="{% url 'poll_answer' poll.id poll.first_ans %}" class="poll-answer">
+                    {{ poll.first_ans }}
+                </a>
+                <a href="{% url 'poll_answer' poll.id poll.second_ans %}" class="poll-answer">
+                    {{ poll.second_ans }}
+                </a>
+                <a href="{% url 'poll_answer' poll.id poll.third_ans %}" class="poll-answer">
+                    {{ poll.third_ans }}
+                </a>
+                <a href="{% url 'poll_answer' poll.id poll.fourth_ans %}" class="poll-answer">
+                    {{ poll.fourth_ans }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
