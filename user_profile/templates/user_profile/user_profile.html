@@ -396,23 +396,23 @@ outline: 0.5vh solid var(--outline-dark);
             {% for poll in polls %}
             <div class="poll">
                 <span class="poll-title">
-                    {{ poll.title }}
+                    {{ poll.0.title }}
                 </span>
                 <br>
                 <span class="poll-question">
-                    {{ poll.question }}
+                    {{ poll.0.question }}
                 </span>
-                <a href="{% url 'poll_answer' poll.id poll.first_ans %}" class="poll-answer">
-                    {{ poll.first_ans }}
+                <a href="{% url 'poll_answer' poll.0.id poll.0.first_ans %}" class="poll-answer">
+                    {{ poll.0.first_ans }}      {{ poll.1.0 }}%
                 </a>
-                <a href="{% url 'poll_answer' poll.id poll.second_ans %}" class="poll-answer">
-                    {{ poll.second_ans }}
+                <a href="{% url 'poll_answer' poll.0.id poll.0.second_ans %}" class="poll-answer">
+                    {{ poll.0.second_ans }}     {{ poll.1.1 }}%
                 </a>
-                <a href="{% url 'poll_answer' poll.id poll.third_ans %}" class="poll-answer">
-                    {{ poll.third_ans }}
+                <a href="{% url 'poll_answer' poll.0.id poll.0.third_ans %}" class="poll-answer">
+                    {{ poll.0.third_ans }}      {{ poll.1.2 }}%
                 </a>
-                <a href="{% url 'poll_answer' poll.id poll.fourth_ans %}" class="poll-answer">
-                    {{ poll.fourth_ans }}
+                <a href="{% url 'poll_answer' poll.0.id poll.0.fourth_ans %}" class="poll-answer">
+                    {{ poll.0.fourth_ans }}     {{ poll.1.3 }}%
                 </a>
             </div>
             {% endfor %}
@@ -425,19 +425,19 @@ outline: 0.5vh solid var(--outline-dark);
                 </span>
                 <br>
                 <span class="test-question">
-                    {{ test.question }}
+                    {{ test.0.question }}
                 </span>
-                <a href="{% url 'test_answer' test.id test.first_ans %}" class="test-answer">
-                    {{ test.first_ans }}
+                <a href="{% url 'test_answer' test.0.id test.0.first_ans %}" class="test-answer">
+                    {{ test.0.first_ans }}      {{ test.1.0 }}%
                 </a>
-                <a href="{% url 'test_answer' test.id test.second_ans %}" class="test-answer">
-                    {{ test.second_ans }}
+                <a href="{% url 'test_answer' test.0.id test.0.second_ans %}" class="test-answer">
+                    {{ test.0.second_ans }}     {{ test.1.1 }}%
                 </a>
-                <a href="{% url 'test_answer' test.id test.third_ans %}" class="test-answer">
-                    {{ test.third_ans }}
+                <a href="{% url 'test_answer' test.0.id test.0.third_ans %}" class="test-answer">
+                    {{ test.0.third_ans }}      {{ test.1.2 }}%
                 </a>
-                <a href="{% url 'test_answer' test.id test.fourth_ans %}" class="test-answer">
-                    {{ test.fourth_ans }}
+                <a href="{% url 'test_answer' test.0.id test.0.fourth_ans %}" class="test-answer">
+                    {{ test.0.fourth_ans }}     {{ test.1.3 }}%
                 </a>
             </div>
             {% endfor %}

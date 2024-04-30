@@ -82,4 +82,7 @@ def test_answer(request, test_id, answer) -> HttpResponse:
     test_ans.user = request.user
     test_ans.save()
 
+    if Test.objects.filter(Q(id=test_id) & Q(correct_ans=answer)).count():
+        print("Well done, your answer is correct")
+
     return redirect("profile", request.user.user_id)
