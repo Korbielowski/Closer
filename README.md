@@ -10,7 +10,7 @@
 ### - II Milestone
 - [X] Friendship system
 - [X] Friend search system
-- [ ] Posts, polls, tests
+- [X] Posts, polls, tests
 ### - III Milestone
 - [ ] Shorts (short videos)
 - [ ] Localization map

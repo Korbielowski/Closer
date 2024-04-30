@@ -49,68 +49,74 @@ def profile(request, userID) -> HttpResponse:
 
     for poll_query in polls_query:
         tmp = []
-        first = math.ceil(
-            UserPollAnswer.objects.filter(
-                Q(poll=poll_query) & Q(answer=poll_query.first_ans)
-            ).count()
-            / poll_query.votes
-            * 100
-        )
-        second = math.ceil(
-            UserPollAnswer.objects.filter(
-                Q(poll=poll_query) & Q(answer=poll_query.second_ans)
-            ).count()
-            / poll_query.votes
-            * 100
-        )
-        third = math.ceil(
-            UserPollAnswer.objects.filter(
-                Q(poll=poll_query) & Q(answer=poll_query.third_ans)
-            ).count()
-            / poll_query.votes
-            * 100
-        )
-        fourth = math.ceil(
-            UserPollAnswer.objects.filter(
-                Q(poll=poll_query) & Q(answer=poll_query.fourth_ans)
-            ).count()
-            / poll_query.votes
-            * 100
-        )
+        if poll_query.votes != 0:
+            first = math.ceil(
+                UserPollAnswer.objects.filter(
+                    Q(poll=poll_query) & Q(answer=poll_query.first_ans)
+                ).count()
+                / poll_query.votes
+                * 100
+            )
+            second = math.ceil(
+                UserPollAnswer.objects.filter(
+                    Q(poll=poll_query) & Q(answer=poll_query.second_ans)
+                ).count()
+                / poll_query.votes
+                * 100
+            )
+            third = math.ceil(
+                UserPollAnswer.objects.filter(
+                    Q(poll=poll_query) & Q(answer=poll_query.third_ans)
+                ).count()
+                / poll_query.votes
+                * 100
+            )
+            fourth = math.ceil(
+                UserPollAnswer.objects.filter(
+                    Q(poll=poll_query) & Q(answer=poll_query.fourth_ans)
+                ).count()
+                / poll_query.votes
+                * 100
+            )
+        else:
+            first, second, third, fourth = 0, 0, 0, 0
         tmp.append(poll_query)
         tmp.append((first, second, third, fourth))
         polls.append(tmp)
 
         for test_query in tests_query:
             tmp = []
-            first = math.ceil(
-                UserTestAnswer.objects.filter(
-                    Q(test=test_query) & Q(answer=test_query.first_ans)
-                ).count()
-                / test_query.votes
-                * 100
-            )
-            second = math.ceil(
-                UserTestAnswer.objects.filter(
-                    Q(test=test_query) & Q(answer=test_query.second_ans)
-                ).count()
-                / test_query.votes
-                * 100
-            )
-            third = math.ceil(
-                UserTestAnswer.objects.filter(
-                    Q(test=test_query) & Q(answer=test_query.third_ans)
-                ).count()
-                / test_query.votes
-                * 100
-            )
-            fourth = math.ceil(
-                UserTestAnswer.objects.filter(
-                    Q(test=test_query) & Q(answer=test_query.fourth_ans)
-                ).count()
-                / test_query.votes
-                * 100
-            )
+            if poll_query.votes != 0:
+                first = math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=test_query) & Q(answer=test_query.first_ans)
+                    ).count()
+                    / test_query.votes
+                    * 100
+                )
+                second = math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=test_query) & Q(answer=test_query.second_ans)
+                    ).count()
+                    / test_query.votes
+                    * 100
+                )
+                third = math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=test_query) & Q(answer=test_query.third_ans)
+                    ).count()
+                    / test_query.votes
+                    * 100
+                )
+                fourth = math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=test_query) & Q(answer=test_query.fourth_ans)
+                    ).count()
+                    / test_query.votes
+                    * 100
+                )
+            else:
+                first, second, third, fourth = 0, 0, 0, 0
             # correct =
             tmp.append(test_query)
             tmp.append((first, second, third, fourth))
