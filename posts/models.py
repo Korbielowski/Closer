@@ -4,6 +4,10 @@ from django.db import models
 from authentication.models import CloserUser
 
 
+class UserContent(models.Model):
+    pass
+
+
 class Post(models.Model):
     user = models.ForeignKey(
         CloserUser, default=None, on_delete=models.CASCADE, related_name="user"

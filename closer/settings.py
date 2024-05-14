@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "search",
     "posts",
     "friendship",
+    "feed",
 ]
 
 MIDDLEWARE = [

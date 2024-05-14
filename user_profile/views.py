@@ -43,7 +43,7 @@ def profile(request, userID) -> HttpResponse:
     posts = Post.objects.filter(user=userID)
     polls_query = Poll.objects.filter(author=userID)
     tests_query = Test.objects.filter(author=userID)
-
+    
     polls = []
     tests = []
 
