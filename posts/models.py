@@ -5,7 +5,11 @@ from authentication.models import CloserUser
 
 
 class UserContent(models.Model):
-    pass
+    TYPE = (("post", "post"), ("poll", "poll"), ("test", "test"))
+    user = models.ForeignKey(
+        CloserUser, default=None, on_delete=models.CASCADE)
+    creation_date = models.DateField(auto_now_add=True)
+    type = models.CharField(max_length=4, choices=TYPE)
 
 
 class Post(models.Model):
@@ -20,8 +24,7 @@ class Post(models.Model):
 
 class Poll(models.Model):
     author = models.ForeignKey(
-        CloserUser, default=None, on_delete=models.CASCADE, related_name="author"
-    )
+        CloserUser, default=None, on_delete=models.CASCADE)
     creation_date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=100, default="")
     question = models.CharField(max_length=500)
