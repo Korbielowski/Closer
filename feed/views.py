@@ -12,12 +12,16 @@ from user_profile.views import profile
 
 def feed(request) -> HttpResponse:
     friends_query = Friendship.objects.filter(
-        Q(Q(inviting_user=request.user) | Q(accepting_user=request.user)) & Q(status="accepted"))
+        Q(Q(inviting_user=request.user) | Q(accepting_user=request.user))
+        & Q(status="accepted")
+    )
     friends = [
-            ( friend.accepting_user
+        (
+            friend.accepting_user
             if friend.inviting_user.user_id == request.user.user_id
-            else friend.inviting_user)
-            for friend in friends_query 
+            else friend.inviting_user
+        )
+        for friend in friends_query
     ]
 
     tests = Test.objects.filter(author__in=friends)
@@ -25,9 +29,20 @@ def feed(request) -> HttpResponse:
     polls = Poll.objects.filter(author__in=friends)
 
     # TODO: Maybe use union like this: query.union(query_poll, query_test, all=True)
-    media = sorted(tuple(chain(posts, polls, tests)), key=operator.attrgetter("creation_date"))
-    content = {"content": media}
+    sorted_query = sorted(
+        tuple(chain(posts, polls, tests)), key=operator.attrgetter("creation_date")
+    )
 
-    print("User created content:\n", *media)
+    media = []
+
+    for med in sorted_query:
+        if med.get_name() == "Post":
+            media.append((med,))
+        elif med.get_name() == "Poll":
+            media.append((med, med.get_ans()))
+        elif med.get_name() == "Test":
+            media.append((med, med.get_ans()))
+
+    content = {"media": media}
 
     return render(request, "feed/feed.html", content)

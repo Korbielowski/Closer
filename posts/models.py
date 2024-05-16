@@ -1,13 +1,13 @@
 from django.db import models
-
+from django.db.models import Q
+import math
 
 from authentication.models import CloserUser
 
 
 class UserContent(models.Model):
     TYPE = (("post", "post"), ("poll", "poll"), ("test", "test"))
-    user = models.ForeignKey(
-        CloserUser, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
     creation_date = models.DateField(auto_now_add=True)
     type = models.CharField(max_length=4, choices=TYPE)
 
@@ -21,10 +21,12 @@ class Post(models.Model):
     description = models.CharField(max_length=500)
     image = models.ImageField(upload_to="posts_images/", blank=True)
 
+    def get_name(self) -> str:
+        return self.__class__.__name__
+
 
 class Poll(models.Model):
-    author = models.ForeignKey(
-        CloserUser, default=None, on_delete=models.CASCADE)
+    author = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
     creation_date = models.DateField(auto_now_add=True)
     title = models.CharField(max_length=100, default="")
     question = models.CharField(max_length=500)
@@ -33,6 +35,50 @@ class Poll(models.Model):
     third_ans = models.CharField(max_length=500)
     fourth_ans = models.CharField(max_length=500)
     votes = models.IntegerField(default=0)
+
+    def get_name(self) -> str:
+        return self.__class__.__name__
+
+    def get_ans(self) -> tuple[str, str, str, str]:
+        output = (
+            str(
+                math.ceil(
+                    UserPollAnswer.objects.filter(
+                        Q(poll=self) & Q(answer=self.first_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserPollAnswer.objects.filter(
+                        Q(poll=self) & Q(answer=self.second_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserPollAnswer.objects.filter(
+                        Q(poll=self) & Q(answer=self.third_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserPollAnswer.objects.filter(
+                        Q(poll=self) & Q(answer=self.fourth_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+        )
+        return output
 
 
 class UserPollAnswer(models.Model):
@@ -57,6 +103,50 @@ class Test(models.Model):
     fourth_ans = models.CharField(max_length=500)
     correct_ans = models.CharField(max_length=500)
     votes = models.IntegerField(default=0)
+
+    def get_name(self) -> str:
+        return self.__class__.__name__
+
+    def get_ans(self) -> tuple[str, str, str, str]:
+        output = (
+            str(
+                math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=self) & Q(answer=self.first_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=self) & Q(answer=self.second_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=self) & Q(answer=self.third_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+            str(
+                math.ceil(
+                    UserTestAnswer.objects.filter(
+                        Q(test=self) & Q(answer=self.fourth_ans)
+                    ).count()
+                    / self.votes
+                    * 100
+                )
+            ),
+        )
+        return output
 
 
 class UserTestAnswer(models.Model):
