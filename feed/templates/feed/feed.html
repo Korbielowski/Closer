@@ -178,23 +178,23 @@ outline: 0.5vh solid var(--outline-dark);
 }
 
 .poll a {
-    text-decoration: none;
-    color: var(--main-text-dark);
+text-decoration: none;
+color: var(--main-text-dark);
 }
 
 .poll a:hover {
-    color: var(--accent);
-    transition: ease-in-out 0.3s;
+color: var(--accent);
+transition: ease-in-out 0.3s;
 }
 
 .test a {
-    text-decoration: none;
-    color: var(--main-text-dark);
+text-decoration: none;
+color: var(--main-text-dark);
 }
 
 .test a:hover {
-    color: var(--accent);
-    transition: ease-in-out 0.3s;
+color: var(--accent);
+transition: ease-in-out 0.3s;
 }
 
 
@@ -230,16 +230,16 @@ outline: 0.5vh solid var(--outline-dark);
       {{ med.0.question }}
     </span>
     <a href="{% url 'poll_answer' med.0.id med.0.first_ans %}" class="poll-answer">
-      {{ med.0.first_ans }}    {{ med.1.0 }}%
+      {{ med.0.first_ans }} {{ med.1.0 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.second_ans %}" class="poll-answer">
-      {{ med.0.second_ans }}    {{ med.1.1 }}%
+      {{ med.0.second_ans }} {{ med.1.1 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.third_ans %}" class="poll-answer">
-      {{ med.0.third_ans }}    {{ med.1.2 }}%
+      {{ med.0.third_ans }} {{ med.1.2 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.fourth_ans %}" class="poll-answer">
-      {{ med.0.fourth_ans }}    {{ med.1.3 }}%
+      {{ med.0.fourth_ans }} {{ med.1.3 }}%
     </a>
   </div>
   {% else %}
@@ -252,16 +252,16 @@ outline: 0.5vh solid var(--outline-dark);
       {{ med.0.question }}
     </span>
     <a href="{% url 'poll_answer' med.0.id med.0.first_ans %}" class="test-answer">
-      {{ med.0.first_ans }}    {{ med.1.0 }}%
+      {{ med.0.first_ans }} {{ med.1.0 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.second_ans %}" class="test-answer">
-      {{ med.0.second_ans }}    {{ med.1.1 }}%
+      {{ med.0.second_ans }} {{ med.1.1 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.third_ans %}" class="test-answer">
-      {{ med.0.third_ans }}    {{ med.1.2 }}%
+      {{ med.0.third_ans }} {{ med.1.2 }}%
     </a>
     <a href="{% url 'poll_answer' med.0.id med.0.fourth_ans %}" class="test-answer">
-      {{ med.0.fourth_ans }}    {{ med.1.3 }}%
+      {{ med.0.fourth_ans }} {{ med.1.3 }}%
     </a>
   </div>
   {% endif %}

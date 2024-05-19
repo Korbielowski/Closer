@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib import auth
-from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Q
 
-import math
+from itertools import chain
+import operator
 
 from authentication.models import CloserUser, Friendship
-from posts.models import Post, Poll, Test, UserPollAnswer, UserTestAnswer
+from posts.models import Post, Poll, Test
 from utils.process_string import process_string
 
 
@@ -28,6 +27,7 @@ def profile(request, userID) -> HttpResponse:
         [user_info[0].home_state, user_info[0].home_country],
         sep=", ",
     )
+
     friends_query = Friendship.objects.filter(
         Q(Q(inviting_user=userID) | Q(accepting_user=userID)) & Q(status="accepted")
     )
@@ -41,86 +41,22 @@ def profile(request, userID) -> HttpResponse:
     )
 
     posts = Post.objects.filter(user=userID)
-    polls_query = Poll.objects.filter(author=userID)
-    tests_query = Test.objects.filter(author=userID)
-    
-    polls = []
-    tests = []
+    polls = Poll.objects.filter(author=userID)
+    tests = Test.objects.filter(author=userID)
 
-    for poll_query in polls_query:
-        tmp = []
-        if poll_query.votes != 0:
-            first = math.ceil(
-                UserPollAnswer.objects.filter(
-                    Q(poll=poll_query) & Q(answer=poll_query.first_ans)
-                ).count()
-                / poll_query.votes
-                * 100
-            )
-            second = math.ceil(
-                UserPollAnswer.objects.filter(
-                    Q(poll=poll_query) & Q(answer=poll_query.second_ans)
-                ).count()
-                / poll_query.votes
-                * 100
-            )
-            third = math.ceil(
-                UserPollAnswer.objects.filter(
-                    Q(poll=poll_query) & Q(answer=poll_query.third_ans)
-                ).count()
-                / poll_query.votes
-                * 100
-            )
-            fourth = math.ceil(
-                UserPollAnswer.objects.filter(
-                    Q(poll=poll_query) & Q(answer=poll_query.fourth_ans)
-                ).count()
-                / poll_query.votes
-                * 100
-            )
-        else:
-            first, second, third, fourth = 0, 0, 0, 0
-        tmp.append(poll_query)
-        tmp.append((first, second, third, fourth))
-        polls.append(tmp)
+    sorted_query = sorted(
+        tuple(chain(posts, polls, tests)), key=operator.attrgetter("creation_date")
+    )
 
-        for test_query in tests_query:
-            tmp = []
-            if poll_query.votes != 0:
-                first = math.ceil(
-                    UserTestAnswer.objects.filter(
-                        Q(test=test_query) & Q(answer=test_query.first_ans)
-                    ).count()
-                    / test_query.votes
-                    * 100
-                )
-                second = math.ceil(
-                    UserTestAnswer.objects.filter(
-                        Q(test=test_query) & Q(answer=test_query.second_ans)
-                    ).count()
-                    / test_query.votes
-                    * 100
-                )
-                third = math.ceil(
-                    UserTestAnswer.objects.filter(
-                        Q(test=test_query) & Q(answer=test_query.third_ans)
-                    ).count()
-                    / test_query.votes
-                    * 100
-                )
-                fourth = math.ceil(
-                    UserTestAnswer.objects.filter(
-                        Q(test=test_query) & Q(answer=test_query.fourth_ans)
-                    ).count()
-                    / test_query.votes
-                    * 100
-                )
-            else:
-                first, second, third, fourth = 0, 0, 0, 0
-            # correct =
-            tmp.append(test_query)
-            tmp.append((first, second, third, fourth))
-            tests.append(tmp)
+    media = []
+
+    for med in sorted_query:
+        if med.get_name() == "Post":
+            media.append((med,))
+        elif med.get_name() == "Poll":
+            media.append((med, med.get_ans()))
+        elif med.get_name() == "Test":
+            media.append((med, med.get_ans()))
 
     return render(
         request,
@@ -131,9 +67,7 @@ def profile(request, userID) -> HttpResponse:
             "user_current_location": user_current_location,
             "user_home_location": user_home_location,
             "friends": friends,
-            "posts": posts,
-            "polls": polls,
-            "tests": tests,
+            "media": media,
         },
     )
 

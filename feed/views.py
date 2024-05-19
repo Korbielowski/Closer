@@ -5,9 +5,8 @@ from django.db.models import Q
 from itertools import chain
 import operator
 
-from authentication.models import CloserUser, Friendship
-from posts.models import Post, Poll, Test, UserPollAnswer
-from user_profile.views import profile
+from authentication.models import Friendship
+from posts.models import Post, Poll, Test
 
 
 def feed(request) -> HttpResponse:
