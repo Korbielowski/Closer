@@ -1,0 +1,27 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block style %}
+
+
+{% endblock style %}
+
+
+{% block content %}
+<div class="short-container">
+  {% for short in shorts %}
+  <div class="short">
+    <div class="title">
+      <span>
+      {{ short.title }}
+      </span>
+    </div>
+    <div class="video">
+      <video width="500" height="500" controls>
+      <source src="{{ short.video.url }}" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

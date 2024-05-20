@@ -7,7 +7,7 @@ import operator
 
 from authentication.models import Friendship
 
-from posts.models import Post, Poll, Test
+from posts.models import Post, Poll, Test, Short
 
 
 def feed(request) -> HttpResponse:
@@ -46,3 +46,25 @@ def feed(request) -> HttpResponse:
     content = {"media": media}
 
     return render(request, "feed/feed.html", content)
+
+
+def feed_shorts(request) -> HttpResponse:
+    friends_query = Friendship.objects.filter(
+        Q(Q(inviting_user=request.user) | Q(accepting_user=request.user))
+        & Q(status="accepted")
+    )
+    friends = [
+        (
+            friend.accepting_user
+            if friend.inviting_user.user_id == request.user.user_id
+            else friend.inviting_user
+        )
+        for friend in friends_query
+    ]
+
+    shorts = Short.objects.filter(user__in=friends)
+    for short in shorts:
+        print(short.title, short.video, short.video.url)
+    content = {"shorts": shorts}
+
+    return render(request, "feed/shorts.html", content)
