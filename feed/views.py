@@ -6,6 +6,7 @@ from itertools import chain
 import operator
 
 from authentication.models import Friendship
+
 from posts.models import Post, Poll, Test
 
 

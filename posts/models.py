@@ -1,15 +1,9 @@
 from django.db import models
 from django.db.models import Q
+
 import math
 
 from authentication.models import CloserUser
-
-
-class UserContent(models.Model):
-    TYPE = (("post", "post"), ("poll", "poll"), ("test", "test"))
-    user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
-    creation_date = models.DateField(auto_now_add=True)
-    type = models.CharField(max_length=4, choices=TYPE)
 
 
 class Post(models.Model):
@@ -154,3 +148,10 @@ class UserTestAnswer(models.Model):
     user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
     answer = models.CharField(max_length=500)
     answer_date = models.DateField(auto_now_add=True)
+
+
+class Short(models.Model):
+    user = models.ForeignKey(CloserUser, default=None, on_delete=models.CASCADE)
+    creation_date = models.DateField(auto_now_add=True)
+    title = models.CharField(max_length=100, default="")
+    video = models.FileField(upload_to="shorts", blank=False)

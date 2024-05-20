@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib import auth
-from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Q
 
-from .forms import PostForm, PollFrom, TestFrom
+from .forms import PostForm, PollFrom, TestFrom, ShortForm
 from .models import Poll, UserPollAnswer, Test, UserTestAnswer
 
 
@@ -30,6 +28,18 @@ def create_poll(request) -> HttpResponse:
             return redirect("profile", request.user.user_id)
     content = {"poll_form": PollFrom()}
     return render(request, "posts/poll_creation.html", content)
+
+
+def create_short(request) -> HttpResponse:
+    if request.method == "POST":
+        short_form = ShortForm(request.POST, request.FILES)
+        if short_form.is_valid():
+            short = short_form.save(commit=False)
+            short.user = request.user
+            short.save()
+            return redirect("profile", request.user.user_id)
+    content = {"short_form": ShortForm()}
+    return render(request, "posts/short_creation.html", content)
 
 
 def poll_answer(request, poll_id, answer) -> HttpResponse:

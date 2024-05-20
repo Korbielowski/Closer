@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, Poll, Test
+from .models import Post, Poll, Test, Short
 
 
 class PostForm(forms.ModelForm):
@@ -145,3 +145,19 @@ class TestFrom(forms.ModelForm):
                 }
             ),
         }
+
+
+class ShortForm(forms.ModelForm):
+    class Meta:
+        model = Short
+        fields = ("title", "video")
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "Short title*",
+                    "name": "title",
+                    "class": "short-title",
+                }
+            )
+        }
+
