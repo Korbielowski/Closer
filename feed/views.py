@@ -63,8 +63,10 @@ def feed_shorts(request) -> HttpResponse:
     ]
 
     shorts = Short.objects.filter(user__in=friends)
+
     for short in shorts:
         print(short.title, short.video, short.video.url)
+
     content = {"shorts": shorts}
 
     return render(request, "feed/shorts.html", content)

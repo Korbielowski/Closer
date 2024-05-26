@@ -1,0 +1,15 @@
+.short-container {
+  position: relative;
+}
+
+.short {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0 auto;
+}
+
+.video {}

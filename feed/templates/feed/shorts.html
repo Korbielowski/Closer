@@ -1,27 +1,103 @@
 {% extends "./base.html" %}
 {% load static %}
+{% load short_extras %}
+
+{% comment %} {% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/shorts.css' %}">
+{% endblock styles %} {% endcomment %}
 
 {% block style %}
+.short-carausel {
 
+}
 
+.carousel-btn {
+position: absolute;
+background: none;
+border: none;
+font-size: 4rem;
+color: var(--main-text-dark);
+left: 70%;
+transform: translateX(-50%);
+}
+
+.carousel-btn:hover, .carousel-btn:focus {
+color: var(--accent);
+transition: ease-in-out 0.3s;
+}
+
+.carousel-btn.next {
+top: 50%
+}
+
+.carousel-btn.prev {
+top: 40%;
+}
+
+.short {
+position: absolute;
+opacity: 0;
+left: 50%;
+transform: translateX(-50%);
+top: 20%;
+}
+
+.short[data-active] {
+opacity: 1;
+}
+
+.title {
+margin: 0 auto;
+}
+
+.video {}
 {% endblock style %}
 
-
 {% block content %}
-<div class="short-container">
+<div class="short-carausel" data-carausel>
+  <button class="carousel-btn prev" data-carausel-btn="prev">
+    <span class="material-symbols-outlined">
+      arrow_upward
+    </span>
+  </button>
+  <button class="carousel-btn next" data-carausel-btn="next">
+    <span class="material-symbols-outlined">
+      arrow_downward
+    </span>
+  </button>
+  <div class="short-container" data-slides>
   {% for short in shorts %}
-  <div class="short">
+  <div class="short" {% if forloop.counter0 == shorts|length|add:"-1" %} data-active {% endif %}>
     <div class="title">
       <span>
-      {{ short.title }}
+        {{ short.title }}
       </span>
     </div>
     <div class="video">
-      <video width="500" height="500" controls>
-      <source src="{{ short.video.url }}" type="video/mp4">
+      <video width="500" height="700" controls controlslist="nodownload nofullscreen noremoteplayback" autoplay muted loop>
+        <source src="{{ short.video.url }}" type="video/mp4">
       </video>
     </div>
   </div>
   {% endfor %}
+  </div>
 </div>
+
+<script>
+  const buttons = document.querySelectorAll("[data-carausel-btn]")
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const offset = button.dataset.carauselBtn === "next" ? 1 : -1
+      const slides = button.closest("[data-carausel]").querySelector("[data-slides]")
+
+      const activeSlide = slides.querySelector("[data-active]")
+      let newIndex = [...slides.children].indexOf(activeSlide) + offset
+      if(newIndex < 0) newIndex = slides.children.length - 1 
+      if(newIndex >= slides.children.length) newIndex = 0
+
+      slides.children[newIndex].dataset.active = true
+      delete activeSlide.dataset.active
+    })
+  })
+</script>
 {% endblock content %}

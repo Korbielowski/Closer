@@ -1,0 +1,69 @@
+:root {
+    --bg-dark: #121212;
+    --main-text-dark: #CCCCCC;
+    --outline-light: #CCCCCC;
+    --outline-dark: #121212;
+    --add-text-dark: #999999;
+    --accent: #4CAF50;
+    --accent-bg: #1B5E20;
+}
+
+* {
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* text-shadow: 1px 1px 2px grey; */
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    background-color: var(--bg-dark);
+    color: var(--main-text-dark);
+}
+
+.navbar {
+    position: sticky;
+    background-color: var(--bg-dark);
+    height: 7vh;
+    width: 100%;
+}
+
+.logo-image-container {
+    float: left;
+    height: 7vh;
+    width: 5vw;
+}
+
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.link-list-container {
+    float: right;
+}
+
+.link-list {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+.list-elment {
+    display: inline-block;
+    margin: 2vh 1vw;
+}
+
+.list-elment a {
+    text-decoration: none;
+    color: var(--main-text-dark);
+}
+
+.list-elment a:hover {
+    color: var(--accent);
+    transition: ease-in-out 0.3s;
+}
