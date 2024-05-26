@@ -343,8 +343,10 @@ transition: ease-in-out 0.3s;
                     </div>
                 </li>
               </ol>
-            <div id="map" class="info-list" hidden="hidden">
-            </div>
+              {% if user_info.current_city != "" %}
+              <div id="map" class="info-list" hidden="hidden">
+              </div>
+              {% endif %}
             </div>
             <button class="expand-button" onclick="toggle(this)">
                 <!-- TODO: Add expand arrow (use toggle)
@@ -460,7 +462,10 @@ transition: ease-in-out 0.3s;
 
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 <script>
-  async function getLocationByUrl(url) {
+  if("{{ user_info.current_city }}" === ""){
+    console.log("No info about city :(");
+  }else {
+ async function getLocationByUrl(url) {
     const response = await fetch(url);
     return response.json();
   }
@@ -483,6 +488,8 @@ transition: ease-in-out 0.3s;
     })
   };
 
+  }
+ 
     let toggle = button => {
         let elements = document.getElementsByClassName("info-list");
       for(const element of elements){
