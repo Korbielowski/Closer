@@ -12,9 +12,9 @@
 - [X] Friend search system
 - [X] Posts, polls, tests
 ### - III Milestone
-- [ ] Shorts (short videos)
-- [ ] Localization map
-- [ ] Main page/feed
+- [X] Shorts (short videos)
+- [X] Localization map
+- [X] Main page/feed
 - [ ] Badges and ranking system
 
 

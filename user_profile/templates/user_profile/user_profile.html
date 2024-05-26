@@ -89,12 +89,24 @@ font-size: 3rem;
 font-size: 2rem;
 }
 
-#info-list {
+.info-list {
 list-style-type: none;
 }
 
-#info-list li {
+.info-list li {
 margin: 10px 0;
+}
+
+.info-and-map {
+margin: 10px 10px;
+display: flex;
+flex-direction: row;
+gap: 5vw;
+}
+
+#map { 
+height: 350px;
+width: 400px;
 }
 
 .current-user-location span {
@@ -249,7 +261,8 @@ transition: ease-in-out 0.3s;
             </div>
             {% endif %}
             {% comment %} TODO: Toggle not on ol but div {% endcomment %}
-            <ol id="info-list" hidden="hidden">
+            <div class="info-and-map">
+            <ol class="info-list" hidden="hidden">
                 <li>
                     <div class="user-gender">
                         <span class="material-symbols-outlined">
@@ -329,7 +342,10 @@ transition: ease-in-out 0.3s;
                         {% endif %}
                     </div>
                 </li>
-            </ol>
+              </ol>
+            <div id="map" class="info-list" hidden="hidden">
+            </div>
+            </div>
             <button class="expand-button" onclick="toggle(this)">
                 <!-- TODO: Add expand arrow (use toggle)
                     <span class="material-symbols-outlined">
@@ -442,12 +458,35 @@ transition: ease-in-out 0.3s;
     </div>
 </div>
 
-
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 <script>
-    let toggle = button => {
-        let element = document.getElementById("info-list");
-        let hidden = element.getAttribute("hidden");
+  async function getLocationByUrl(url) {
+    const response = await fetch(url);
+    return response.json();
+  }
 
+  const map = L.map("map")
+  const locationUrl = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + "{{ user_info.current_city }}";
+  getLocationByUrl(locationUrl).then((a) => {
+    map.setView([a[0].lat, a[0].lon], 13);
+    L.marker([a[0].lat, a[0].lon]).addTo(map);
+  });
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    minZoom: 13,
+    maxZoom: 13,
+  }).addTo(map); 
+
+  const printLocation = () => {
+    userLocation.then((a) => {
+      console.log(a[0].lat);
+    })
+  };
+
+    let toggle = button => {
+        let elements = document.getElementsByClassName("info-list");
+      for(const element of elements){
+       let hidden = element.getAttribute("hidden");
         if (hidden) {
             element.removeAttribute("hidden");
             button.innerText = "Show less";
@@ -455,7 +494,8 @@ transition: ease-in-out 0.3s;
             element.setAttribute("hidden", "hidden");
             button.innerText = "Show more";
         }
-    }
+      }
+    };
 </script>
 
 {% endblock content %}
