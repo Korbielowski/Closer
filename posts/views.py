@@ -4,7 +4,7 @@ from django.db.models import Q
 
 from .forms import PostForm, PollFrom, TestFrom, ShortForm
 from .models import Poll, UserPollAnswer, Test, UserTestAnswer
-
+from user_profile.models import UserRanks, Badges
 
 def create_post(request) -> HttpResponse:
     if request.method == "POST":
@@ -13,6 +13,13 @@ def create_post(request) -> HttpResponse:
             post = post_form.save(commit=False)
             post.user = request.user
             post.save()
+            user_rank_query = UserRanks.objects.get(user=request.user)
+            user_rank_query.points += 1
+            user_rank_query.save()
+
+            user_rank_query.rank = user_rank_query.new_rank() 
+            user_rank_query.save()
+
             return redirect("profile", request.user.user_id)
     content = {"post_form": PostForm()}
     return render(request, "posts/post_creation.html", content)
@@ -25,6 +32,13 @@ def create_poll(request) -> HttpResponse:
             poll = poll_form.save(commit=False)
             poll.author = request.user
             poll.save()
+
+            user_rank_query = UserRanks.objects.get(user=request.user)
+            user_rank_query.points += 1
+            user_rank_query.save()
+
+            user_rank_query.rank = user_rank_query.new_rank() 
+            user_rank_query.save()
             return redirect("profile", request.user.user_id)
     content = {"poll_form": PollFrom()}
     return render(request, "posts/poll_creation.html", content)
@@ -37,6 +51,12 @@ def create_short(request) -> HttpResponse:
             short = short_form.save(commit=False)
             short.user = request.user
             short.save()
+            user_rank_query = UserRanks.objects.get(user=request.user)
+            user_rank_query.points += 2
+            user_rank_query.save()
+
+            user_rank_query.rank = user_rank_query.new_rank() 
+            user_rank_query.save()
             return redirect("profile", request.user.user_id)
     content = {"short_form": ShortForm()}
     return render(request, "posts/short_creation.html", content)
@@ -70,6 +90,13 @@ def create_test(request) -> HttpResponse:
             test = test_form.save(commit=False)
             test.author = request.user
             test.save()
+            user_rank_query = UserRanks.objects.get(user=request.user)
+            user_rank_query.points += 2
+            user_rank_query.save()
+
+            user_rank_query.rank = user_rank_query.new_rank() 
+            user_rank_query.save()
+
             return redirect("profile", request.user.user_id)
     content = {"test_form": TestFrom()}
     return render(request, "posts/test_creation.html", content)

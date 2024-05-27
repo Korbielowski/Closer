@@ -34,6 +34,8 @@ class Poll(models.Model):
         return self.__class__.__name__
 
     def get_ans(self) -> tuple[str, str, str, str]:
+        if self.votes == 0:
+            return ("0", "0", "0", "0")
         output = (
             str(
                 math.ceil(
@@ -102,6 +104,8 @@ class Test(models.Model):
         return self.__class__.__name__
 
     def get_ans(self) -> tuple[str, str, str, str]:
+        if self.votes == 0:
+            return ("0", "0", "0", "0")
         output = (
             str(
                 math.ceil(

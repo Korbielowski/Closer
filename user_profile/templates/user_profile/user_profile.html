@@ -253,6 +253,15 @@ transition: ease-in-out 0.3s;
         <div class="user-info">
             <div class="user-name">
                 <span class="name">{{ user_name }}</span>
+                </br>
+                <span class="ranks-badges"> 
+                  {% if rank.0.rank == "NewUser" %}
+
+                  {% elif rank.0.rank == "Intermediate"%}
+                  {{rank.0.rank}}
+
+                  {% endif %}
+                </span>
             </div>
             {% if user_info.about_me != "" %}
             <div class="user-about-me">

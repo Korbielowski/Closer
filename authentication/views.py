@@ -6,6 +6,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.http import HttpResponse
 
 from . import forms, models
+from user_profile.models import UserRanks, Badges 
 
 # TODO: Add proper messages when logging in, singing up and logging out. Messages pop ups (probably html modals)
 
@@ -62,6 +63,13 @@ def signup(request) -> HttpResponse:
                     username=form.cleaned_data["email"],
                     password=form.cleaned_data["password"],
                 )
+
+                user_rank = UserRanks(user=user)
+                user_rank.save()
+
+                user_badge = Badges(user=user)
+                user_badge.save()
+
                 auth.login(request, user)
                 messages.success(request, "Signed up successfully :)")
                 return redirect("profile", userID=request.user.user_id)

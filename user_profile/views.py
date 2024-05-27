@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
 
@@ -7,6 +7,7 @@ import operator
 
 from authentication.models import CloserUser, Friendship
 from posts.models import Post, Poll, Test
+from .models import UserRanks, Badges
 from utils.process_string import process_string
 
 
@@ -27,6 +28,9 @@ def profile(request, userID) -> HttpResponse:
         [user_info[0].home_state, user_info[0].home_country],
         sep=", ",
     )
+
+    badges = Badges.objects.filter(user=userID)
+    rank = UserRanks.objects.filter(user=userID)
 
     friends_query = Friendship.objects.filter(
         Q(Q(inviting_user=userID) | Q(accepting_user=userID)) & Q(status="accepted")
@@ -64,6 +68,8 @@ def profile(request, userID) -> HttpResponse:
         {
             "user_info": user_info[0],
             "user_name": user_name,
+            "badges": badges,
+            "rank": rank,
             "user_current_location": user_current_location,
             "user_home_location": user_home_location,
             "friends": friends,
