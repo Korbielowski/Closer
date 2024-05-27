@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 from .forms import PostForm, PollFrom, TestFrom, ShortForm
-from .models import Poll, UserPollAnswer, Test, UserTestAnswer
+from .models import Post, Poll, UserPollAnswer, Test, UserTestAnswer
 from user_profile.models import UserRanks, Badges
 
 def create_post(request) -> HttpResponse:
@@ -13,12 +13,19 @@ def create_post(request) -> HttpResponse:
             post = post_form.save(commit=False)
             post.user = request.user
             post.save()
+
             user_rank_query = UserRanks.objects.get(user=request.user)
             user_rank_query.points += 1
             user_rank_query.save()
-
             user_rank_query.rank = user_rank_query.new_rank() 
             user_rank_query.save()
+
+            user_badge_query = Badges.objects.get(user=request.user)
+            post_count = Post.objects.filter(user=request.user).count()
+
+            if post_count >= 5:
+                user_badge_query.poster_badge = user_badge_query.Badges.POSTER 
+                user_badge_query.save()
 
             return redirect("profile", request.user.user_id)
     content = {"post_form": PostForm()}
@@ -36,9 +43,16 @@ def create_poll(request) -> HttpResponse:
             user_rank_query = UserRanks.objects.get(user=request.user)
             user_rank_query.points += 1
             user_rank_query.save()
-
             user_rank_query.rank = user_rank_query.new_rank() 
             user_rank_query.save()
+
+            user_badge_query = Badges.objects.get(user=request.user)
+            poll_count = Poll.objects.filter(author=request.user).count()
+
+            if poll_count >= 5:
+                user_badge_query.poller_badge = user_badge_query.Badges.POLLER 
+                user_badge_query.save()
+
             return redirect("profile", request.user.user_id)
     content = {"poll_form": PollFrom()}
     return render(request, "posts/poll_creation.html", content)
@@ -51,12 +65,21 @@ def create_short(request) -> HttpResponse:
             short = short_form.save(commit=False)
             short.user = request.user
             short.save()
+
             user_rank_query = UserRanks.objects.get(user=request.user)
             user_rank_query.points += 2
             user_rank_query.save()
-
             user_rank_query.rank = user_rank_query.new_rank() 
             user_rank_query.save()
+
+            user_badge_query = Badges.objects.get(user=request.user)
+            short_count = Short.objects.filter(user=request.user).count()
+
+            if short_count >= 5:
+                user_badge_query.shorter_badge = user_badge_query.Badges.SHORTER
+                user_badge_query.save()
+
+
             return redirect("profile", request.user.user_id)
     content = {"short_form": ShortForm()}
     return render(request, "posts/short_creation.html", content)
@@ -90,12 +113,20 @@ def create_test(request) -> HttpResponse:
             test = test_form.save(commit=False)
             test.author = request.user
             test.save()
+
             user_rank_query = UserRanks.objects.get(user=request.user)
             user_rank_query.points += 2
             user_rank_query.save()
-
             user_rank_query.rank = user_rank_query.new_rank() 
             user_rank_query.save()
+
+            user_badge_query = Badges.objects.get(user=request.user)
+            test_count = Test.objects.filter(author=request.user).count()
+
+            if test_count >= 5:
+                user_badge_query.tester_badge = user_badge_query.Badges.TESTER
+                user_badge_query.save()
+
 
             return redirect("profile", request.user.user_id)
     content = {"test_form": TestFrom()}
