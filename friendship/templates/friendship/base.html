@@ -91,13 +91,18 @@
         </div>
         <div class="link-list-container">
             <ol class="link-list">
+             <li class="list-elment">
+                <a href="{% url 'feed_shorts' %}" title="Shorts">
+                  <span class="material-symbols-outlined">videocam</span>
+                </a>
+              </li>
+
                 <li class="list-elment">
-                    <a href="" title="Settings">
-                        <span class="material-symbols-outlined">
-                        settings
-                        </span>
-                    </a>
-                </li>
+                    <a href="{% url 'feed' %}" title="Feed">
+                      <span class="material-symbols-outlined">
+                      home
+                      </span>
+                    </a>                </li>
                 <li class="list-elment">
                     {% comment %} TODO: Try to add search option without redirecting to search.page, maybe something like this "name=first_name-second_name"  {% endcomment %}
                     <a href="{% url 'search_page' %}" title="Search">
